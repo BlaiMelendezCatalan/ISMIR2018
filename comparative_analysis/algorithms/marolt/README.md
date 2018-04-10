@@ -52,6 +52,9 @@ Move features/model.mat to model/model.mat
 
 ## Model testing:
 
-Test the model using *input\_file\_name* and threshold *t*
+Test the model using *input\_file* and threshold *t*
+```
+makeMusicSpeechSegmentationMirex15('../../audio/testing\_split/input_file', '../../estimations/marolt/raw\_estimations/input\_file\_name', t)
+```
 
-$ makeMusicSpeechSegmentationMirex15('../../audio/testing\_split/<input_file_name>', '../../estimations/marolt/raw\_estimations/input\_file\_name', t)
+NOTE: Run this commands for each *input_file* and *threshold*.
