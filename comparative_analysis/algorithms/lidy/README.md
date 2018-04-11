@@ -46,7 +46,7 @@ Train a CNN using features.npz and the corresponding annotations listed in annot
 python -u rp_convnet.py ../features/features.npz ../annotations/annotations.txt ../model/ - -
 ```
 
-NOTE: features.npz can be downloaded from TODO(LINK)
+NOTE: features.npz can be downloaded from https://zenodo.org/record/1216062
 
 
 ## Model testing:

@@ -1,10 +1,6 @@
 # Tsipas' algorithm
 
 ## Getting ready:
-
-> Download the training and testing splits from TODO(link)
-
-> Extract files into ../../audio/training\_split and ../../audio/testing\_split
 ```
 (sudo) docker pull blaimelcat/comparative_analysis_tsipas_algorithm
 
@@ -12,6 +8,14 @@
 ```
 (Inside docker container)
 ```
+apt-get update
+
+pip install --upgrade pip
+
+pip install tqdm
+
+apt-get install sox
+
 cd /audio/training_split
 
 mv `ls | head -1000` /opt/speech-music-discrimination/training_dataset/audio_0/audio/
@@ -25,14 +29,16 @@ mv `ls | head -1000` /opt/speech-music-discrimination/training_dataset/audio_3/a
 
 ## Create training audio files:
 ```
-cd /opt/speech-music-discrimination/training_dataset/audio_0/audio/; python combine.py
+cd /opt/speech-music-discrimination/training_dataset/audio_0/; python combine.py
 
-cd /opt/speech-music-discrimination/training_dataset/audio_1/audio/; python combine.py
+cd /opt/speech-music-discrimination/training_dataset/audio_1/; python combine.py
 
-cd /opt/speech-music-discrimination/training_dataset/audio_2/audio/; python combine.py
+cd /opt/speech-music-discrimination/training_dataset/audio_2/; python combine.py
 
-cd /opt/speech-music-discrimination/training_dataset/audio_3/audio/; python combine.py
+cd /opt/speech-music-discrimination/training_dataset/audio_3/; python combine.py
 ```
+
+NOTE: This takes long and if possible should be run in parallel
 
 ## Feature extraction and model training:
 
