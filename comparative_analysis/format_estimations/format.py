@@ -65,33 +65,48 @@ def get_formatted_gt(formatted_gt_dir, audio_dir, d):
                 duration = len(wav) / float(sr)
                 lines = []
                 for i, it in enumerate(sorted(d[folder][fname])):
+                    # If two music intervals are separated, introduce a
+                    # no-music interval in between. 
                     if round(last_end, 2) != round(it[0], 2):
                         lines.append(str(round(last_end, 2)) +\
                                      '\t' + str(round(it[0], 2)) +\
                                      '\t' + 'no-music')
+                    # If start is equal or higher than the total duration,
+                    # discard this row. It can be equal due to rounding.
                     if round(it[0], 2) >= duration:
                         pass
+                    # If the interval's end is lower than the total duration,
+                    # introduce a music interval normally
                     elif round(it[1], 2) <= duration:
                         lines.append(str(round(it[0], 2)) +\
                                      '\t' + str(round(it[1], 2)) +\
                                      '\t' + 'music')
                         last_end = round(it[1], 2)
+                    # If the interval's end is equal or higher than the total
+                    # duration, introduce a music interval normally that ends
+                    # at total duration.
                     else:
                         lines.append(str(round(it[0], 2)) +\
                                      '\t' + str(round(duration, 2)) +\
                                      '\t' + 'music')
                         last_end = duration
+                    # If it is the last interval and the end does not reach
+                    # total duration, introduce a no-music interval after it that
+                    # reaches total duration.
                     first_condition = (i == len(d[folder][fname]) - 1)
                     second_condition = (round(it[1], 2) < round(duration, 2))
                     if first_condition and second_condition:
                         lines.append(str(round(it[1], 2)) +\
                                      '\t' + str(round(duration, 2)) +\
                                      '\t' + 'no-music')
+                # If there is no music interval, create a no-music interval
+                # from start to end.
                 if lines == []:
                     line = str(0.0) + '\t' + str(round(duration, 2)) +\
                            '\t' + 'no-music'
                     f.write(line)
                     continue
+                # Write all intervals
                 for i, line in enumerate(lines):
                     if i != 0:
                         line = '\n' + line
